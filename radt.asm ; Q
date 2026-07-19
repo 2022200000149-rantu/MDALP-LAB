@@ -1,7 +1,7 @@
 .model small ;     1 DS + 1 CS
 .stack 100h;   256 bytes
 .data  
-msg db "Summation:  $"   ;to print " only and $ only
+msg db "Summation:  $"   ; How to print " only and $ only
 ;var_name+var_size+str
 .code
 
