@@ -28,9 +28,8 @@ The repository is organized into distinct directories to keep class activities s
 ---
 
 ## 🛠️ Tools & Technologies Used
-* **Languages:** Assembly Language (x86 / 8086 Instruction Set Architecture)
-* **Assembler/IDE:** *[e.g., emu8086 / MASM / TASM — Change this based on what you use in class]*
-* **Simulation Tools:** *[e.g., Proteus / Logisim — Change this if applicable]*
+* **Language:** Assembly Language (x86 / 8086 Instruction Set Architecture)
+* **IDE & Emulator:** emu8086
 
 ---
 
