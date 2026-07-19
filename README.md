@@ -13,7 +13,7 @@ Welcome to my repository for the **CSE364.8 (Section 8)** Lab course. This repos
 * **Course Title:** Microprocessor Design and Assembly Language Programming Lab
 * **Course Code:** CSE364.8
 * **Semester:** Summer 2026
-* **Faculty:** **Radiathun Tasnia**
+* **Faculty:** **[RADT** **Radiathun Tasnia** 
   * *Designation:* Lecturer, Department of CSE
 
 ---
