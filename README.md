@@ -23,7 +23,7 @@ Welcome to my repository for the **CSE364.8 (Section 8)** Lab course. This repos
 The repository is organized into distinct directories to keep class activities separate from independent assignments:
 
 * `/Classwork/` – Contains assembly programs, circuit designs, and exercises executed during formal lab hours.
-* `/Homework/` – Contains home assignments, problem sets, and lab reports submitted for evaluation.
+* `/HW/` – Contains home assignments, problem sets, and lab reports submitted for evaluation.
 
 ---
 
