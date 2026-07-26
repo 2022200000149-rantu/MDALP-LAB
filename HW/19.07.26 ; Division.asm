@@ -1,67 +1,80 @@
-.model small ;     1 DS + 1 CS, average, large
-.stack 100h;ss declare,   256 bytes
-.data  
-dividend db "Enter Dividend: $" ;db=define 1 byte , dw= define word(2byte)  
- divisor db 13,10, "Enter Divisor: $"
- quotient db 13,10, "Quotient: $"
- error db  "Error Undifined $"
-.code ;whole code
+.model small ; 1 DS + 1 CS, average, large
+.stack 100h  ; ss declare, 256 bytes
 
-main proc     ;procedure
+.data  
+    dividend  db 13, 10, "Enter Dividend: $"  
+    divisor   db 13, 10, "Enter Divisor: $"
+    quotient  db 13, 10, "Quotient: $"
+    remainder db 13, 10, "Remainder: $"
+    error     db 13, 10, "Error: Division by Zero!$"
+
+.code
+main proc
     mov ax, @data
-    mov ds, ax ;   DS Activate 
+    mov ds, ax ; Activate Data Segment
     
-    ;load effective address   
-    lea dx,   dividend  ;str load
-    mov ah,9h     ;str print
-    int 21h ;  interrupt 
+    ; --- 1. GET DIVIDEND ---
+    lea dx, dividend
+    mov ah, 9h
+    int 21h 
     
-    ;divident  input
-    mov ah,1h ; char input    
-    int 21h ; al interrupt
-    mov bl, al ;divident
-    sub bl, '0' ; dec convert
+    mov ah, 1h ; character input
+    int 21h 
+    mov bl, al ; store dividend ASCII in BL
+    sub bl, '0' ; convert ASCII to integer number
     
-    ;load effective address 
-    lea dx,   divisor  ;str load
-    mov ah,9h     ;str print
-    int 21h ;  interrupt
+    ; --- 2. GET DIVISOR ---
+    lea dx, divisor
+    mov ah, 9h
+    int 21h 
     
-    ;divisor   input
-    mov ah,1h ; char input    
-    int 21h ; al interrupt
-    mov bh, al ;divisor
-    sub bh, '0' ; dec convert 
+    mov ah, 1h ; character input
+    int 21h 
+    mov bh, al ; store divisor ASCII in BH
+    sub bh, '0' ; convert ASCII to integer number
     
-    ;load effective address 
-    lea dx,   quotient  ;str load
-    mov ah,9h     ;str print
-    int 21h ;  interrupt 
-    
-    ;corner case
+    ; --- 3. CHECK DIVIDE BY ZERO ---
     cmp bh, 0
-    je divide_zero ;jump if equal 
+    je divide_zero 
      
-    ;else 
-    mov al, bl ; division 
-    xor ah,ah ;memory clear
-    div bh ; divisior
-    mov dl, al ; output reg
-    add dl, '0' ; asci convert
-    mov ah, 2h; 
+    ; --- 4. PERFORM DIVISION ---
+    ; Must clear AH right before DIV so AX contains ONLY the dividend
+    mov al, bl 
+    xor ah, ah ; clear high byte (AX = 0000 + AL)
+    div bh     ; AX / BH -> AL = Quotient, AH = Remainder
+    
+    mov ch, ah ; safely save remainder in CH before AH is modified by string printing
+    mov cl, al ; safely save quotient in CL
+
+    ; --- 5. PRINT QUOTIENT ---
+    lea dx, quotient
+    mov ah, 9h
+    int 21h 
+
+    mov dl, cl  ; load saved quotient
+    add dl, '0' ; convert integer back to ASCII character
+    mov ah, 2h  ; print character
     int 21h   
+    
+    ; --- 6. PRINT REMAINDER ---
+    lea dx, remainder
+    mov ah, 9h
+    int 21h 
+
+    mov dl, ch  ; load saved remainder
+    add dl, '0' ; convert integer back to ASCII character
+    mov ah, 2h  ; print character
+    int 21h
+
     jmp exit
     
-    
-    divide_zero:   
-    ;load effective address   
-    lea dx,   error  ;str load
-    mov ah,9h     ;str print
-    int 21h ;  interrupt           
-                         
+divide_zero:   
+    lea dx, error
+    mov ah, 9h
+    int 21h 
      
-    exit:
+exit:
     mov ah, 4ch
     int 21h
-main endp ; end of precedure 
-end main ; whole program exit
+main endp
+end main
