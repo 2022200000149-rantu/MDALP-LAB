@@ -35,4 +35,4 @@ The repository is organized into distinct directories to keep class activities s
 
 ## 🎯 Note for Faculty Evaluation
 > **To Faculty Member (Radiathun Tasnia):** 
-> A collaborator invitation has been sent to your GitHub account to grant access to this private repository for grading and review purposes. Please accept the invitation to view the commit history and source files.
+> A collaborator invitation has been sent to your GitHub account to grant access to this repository for grading and review purposes. Please accept the invitation to view the commit history and source files.
