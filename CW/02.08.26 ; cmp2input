@@ -21,10 +21,10 @@ main proc
     mov bh, al             ; 2nd number = bh
     
     cmp bl, bh             ; bl>=bh
-    jle large1             ; jump if greater or equal 
-    ;else, bh>bl
-    
-    
+    jle small1             ; jump if greater or equal 
+   
+   
+    ;else, bh<bl 
     ;output msg print
     lea dx, result         ; str load   ; load effective address
     mov ah, 9h             ; str print
@@ -37,7 +37,7 @@ main proc
     jmp exit
      
     
-    large1:
+    small1:
     
     ;output msg print
     lea dx, result         ; str load   ; load effective address
@@ -46,12 +46,12 @@ main proc
     
     ;output value print
     mov dl,bl              ;output reg
-    mov ah,2h             ;char print
+    mov ah,2h              ;char print
     int 21h 
     jmp exit
     
     
-    exit :                  ;   segment build
+    exit :                 ;   segment build
     mov ah, 4ch            ;  ah=4c
     int 21h                ;       interreupt
     main endp              ; end of procedure
