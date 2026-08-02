@@ -22,11 +22,11 @@ main proc
     int 21h
     mov cl, al             ; 3rd number = cl
     
-    cmp bl, bh             ; bl>=bh
+    cmp bl, bh             ; bl<=bh
     jle small1             ; jump if greater or equal 
     ;else, bh>bl
-    large2:
-    cmp bh, cl             ;bh>=cl
+    small2:
+    cmp bh, cl             ;bh<=cl
     jle small3             ;jump if greater or equal  
     ;else, cl is largest
     
@@ -57,7 +57,7 @@ main proc
     
     
     small1:
-    cmp bl, cl             ;bl>=cl
+    cmp bl, cl             ;bl<=cl
     jle small4                   ;jump if greater or equal  
     ;else, cl>bl
     
@@ -84,7 +84,7 @@ main proc
     int 21h 
     jmp exit
     
-    exit :                  ;   segment build
+    exit :                 ;   segment build
     mov ah, 4ch            ;  ah=4c
     int 21h                ;       interreupt
     main endp              ; end of procedure
