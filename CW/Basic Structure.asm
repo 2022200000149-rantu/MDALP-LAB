@@ -1,4 +1,4 @@
-.model small             ;     1 DS + 1 CS
+.model small             ;   1 DS + 1 CS
 .stack 100h              ;   256 bytes
 .data  
 .code
@@ -9,7 +9,7 @@ main proc
       
       
     exit :               ;   segment build
-    mov ah, 4ch          ;  ah=4c
-    int 21h              ;       interreupt
-    main endp            ; end of procedure
-end main                 ; whole program exit
+    mov ah, 4ch          ;   ah=4c
+    int 21h              ;   interreupt
+    main endp            ;   end of procedure
+end main                 ;   whole program exit
