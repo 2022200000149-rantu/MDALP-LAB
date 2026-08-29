@@ -14,7 +14,7 @@ main proc
     mov ah, 9h ; str print
     int 21h ; interreupt   
     
-   ; lea dx,  ; str load   ; load effective address
+   ; lea dx, rantu  ; str load   ; load effective address
    ; mov ah, 9h ; str print
    ; int 21h ; interreupt
     
