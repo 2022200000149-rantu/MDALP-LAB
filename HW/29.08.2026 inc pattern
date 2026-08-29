@@ -1,0 +1,48 @@
+.model small             ; 1 DS + 1 CS
+.stack 100h              ; 256 bytes
+.data  
+.code
+
+main proc
+    mov ax, @data
+    mov ds, ax           ; DS Activate  
+      
+    mov cx, 3            ; Total number of rows (CX = 3)
+    mov bx, 1            ; Start inner count at 1 pattern per row
+    
+    outer_loop:          
+    push cx              ; Save outer loop counter on stack
+    mov cx, bx           ; Set inner loop count to current row number
+    
+    inner_loop:          ; Print "12 " sequence
+    mov dl, '1'          ; Print '1'
+    mov ah, 2            
+    int 21h              
+
+    mov dl, '2'          ; Print '2'
+    mov ah, 2            
+    int 21h              
+
+    mov dl, ' '          ; Print space separator
+    mov ah, 2            
+    int 21h              
+
+    loop inner_loop      ; Repeat inner sequence for current line
+    
+    ; Print Newline (Carriage Return + Line Feed)
+    mov dl, 13
+    mov ah, 2
+    int 21h
+    mov dl, 10
+    mov ah, 2
+    int 21h
+    
+    inc bx               ; Increase pattern count for the next line
+    pop cx               ; Restore outer loop counter
+    loop outer_loop      ; Repeat for remaining rows
+      
+    exit:                
+    mov ah, 4ch          ; Terminate program
+    int 21h              
+main endp                
+end main
