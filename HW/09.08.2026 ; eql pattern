@@ -1,0 +1,46 @@
+.model small             ; 1 DS + 1 CS
+.stack 100h              ; 256 bytes
+.data  
+.code
+
+main proc
+    mov ax, @data
+    mov ds, ax           ; DS Activate  
+      
+    mov cx, 3            ; Outer loop: 3 rows
+    
+    outer_loop:          
+    push cx              ; Save outer loop counter on stack
+    mov cx, 3            ; Inner loop: print "12 " 3 times on every row
+    
+    inner_loop:          ; Print "12 " sequence
+    mov dl, '1'          ; Print '1'
+    mov ah, 2            
+    int 21h              
+
+    mov dl, '2'          ; Print '2'
+    mov ah, 2            
+    int 21h              
+
+    mov dl, ' '          ; Print space separator
+    mov ah, 2            
+    int 21h              
+
+    loop inner_loop      ; Repeat inner sequence for current line
+    
+    ; Print Newline (Carriage Return + Line Feed)
+    mov dl, 13
+    mov ah, 2
+    int 21h
+    mov dl, 10
+    mov ah, 2
+    int 21h
+    
+    pop cx               ; Restore outer loop counter
+    loop outer_loop      ; Repeat for remaining rows
+      
+    exit:                
+    mov ah, 4ch          ; Terminate program
+    int 21h              
+main endp                
+end main
