@@ -1,0 +1,10 @@
+; 2 Bit Shift and 2 Bit Rotation
+
+
+; User Input : 2 
+
+; Output: 
+; Shift Left: 8
+; Shift Right: 0
+; Rotate Left: 8
+; Rotate Right: 128
