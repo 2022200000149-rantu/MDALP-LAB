@@ -1,0 +1,54 @@
+.model small             
+
+.stack 100h              
+.data 
+arrin db "Insert Array Elements: $"
+arrout db 13,10, "Array Display: $" 
+arr db 6 dup(?)                  
+.code                    
+
+main proc                
+    mov ax, @data      
+    mov ds, ax           
+    
+    lea dx, arrin
+    mov ah, 9
+    int 21h
+    
+    lea si, arr
+    mov cx, 4
+    
+    array_input:           
+    mov ah, 1h 
+    int 21h
+    mov [si], al        ; value shift to address space
+    mov dl, 32
+    mov ah, 2
+    int 21h
+    inc si
+    loop array_input
+    
+    lea dx, arrout
+    mov ah, 9
+    int 21h  
+    
+    
+    lea si, arr      ; output array load        
+    mov cx, 4        ; array display counter
+    
+    array_display:           
+    mov dl , [si]
+    mov ah, 2h
+    int 21h
+    mov dl, 32
+    int 21h
+    inc si
+    loop array_display       ; cx!=0 loop continue
+    
+    
+      
+    exit :               
+    mov ah, 4ch          ; Load function 4Ch (Terminate Process) into AH register
+    int 21h              ; Call DOS interrupt to exit to OS
+main endp                ; End of the main procedure
+end main                 ; Program entry point end marker
