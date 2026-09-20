@@ -1,0 +1,76 @@
+.model small
+.stack 100h
+.data 
+arrin db "Insert array elements: $"
+sort db 13,10, "Sorted Array: $"
+arr db 6 (?)
+.code
+
+main proc 
+    mov ax, @data
+    mov ds, ax
+    
+    lea dx, arrin
+    mov ah, 9h
+    int 21h
+    
+    lea bx, arr        ; array load
+    mov cx, 6
+    
+    array_input:
+    mov ah, 1
+    int 21h
+    ;al
+    mov [bx], al        ; value shifted address
+    mov dl, 32          ;space
+    mov ah, 2
+    int 21h
+    inc bx              ;array input index inc            
+    loop array_input    ;cx!=0 loop continue             
+    
+    mov cx, 6           ;value = n= 6
+    dec cx              ; compare = (n-1)
+    
+    track_loop:         ;bubble sort counting
+    mov bx, cx          ; base value  compare
+    mov si, 0           ; comparing index set to 0
+    
+    sort_loop:
+    mov al, arr[si]     ;1st element
+    mov dl, arr[si+1]   ;2nd element
+    cmp al,dl
+    jc  inc_sort                  ;jump if carry 
+    ;jnc  inc_sort                  ;jump if not carry
+    ;else
+    mov arr[si], dl
+    mov arr[si+1], al             ;element swap
+    
+    inc_sort:
+    inc si             ; index inx
+    dec bx            ; comparing value
+    jnz sort_loop     ; jump if not equal
+    ;else
+    loop track_loop    ; start from index 0
+    
+    lea dx, sort
+    mov ah, 9h
+    int 21h
+    
+    lea bx, arr
+    mov cx, 6
+    
+    array_display:
+    mov dl, [bx]
+    mov ah,2h
+    int 21h
+    mov dl, 32
+    int 21h
+    inc bx
+    loop array_display                  
+    
+    exit:
+    mov ah, 4ch
+    int 21h
+    
+    main endp
+end main
