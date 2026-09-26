@@ -32,11 +32,13 @@ main proc
     ;input msg print
     lea dx, input
     mov ah, 9h
-    int 21h
+    int 21h 
     
     ;take input value 
     mov ah, 1h          ;how many students in your class
-    int 21h
+    int 21h  
+    
+    
     sub al, '0'
     
     mov n, al           ;n= student number
@@ -44,7 +46,7 @@ main proc
     call inputMarks     ;students marks input in array
     call surveyReport   ;high,low,pass,fail
     call calAvg         ;calculate average
-   ; call sortMerit      ;merit list in des order
+    ;call sortMerit      ;merit list in des order
     call displayResult  ;display all output 
     
     
@@ -68,6 +70,8 @@ inputMarks proc
     push dx             ;value save
     
     ;student mark msg in loop
+   
+    
     lea dx, mark
     mov ah, 9h
     int 21h
@@ -154,9 +158,48 @@ calAvg proc
     
     ret
     calAvg endp
+
+sortMerit proc
+    mov cl, n
+    cmp cl, 1
+    jbe end_sort          
+    dec cl
+    xor ch, ch
+
+outer_loop:
+    push cx
+    lea si, number
+    mov cl, n
+    dec cl
+    xor ch, ch
+
+inner_loop:
+    mov al, [si]
+    cmp al, [si+1]
+    jae no_swap           ; Descending Order: [si] >= [si+1] ??? swap ??? ??
     
+    ; Swap (??????)
+    xchg al, [si+1]
+    mov [si], al
+
+no_swap:
+    inc si
+    loop inner_loop
+
+    pop cx
+    loop outer_loop
+
+end_sort:
+    ret
+sortMerit endp    
+
 displayResult proc 
     
+    MOV AH, 2h
+    MOV DL, 13
+    INT 21H
+    MOV DL, 10
+    INT 21H
     
     ;highest msg print
     lea dx, high
@@ -213,6 +256,29 @@ displayResult proc
     mov ah, 2
     int 21h
     
+    ; Merit List Header print
+    lea dx, list
+    mov ah, 9h
+    int 21h
+
+    ; Display Sorted Merit List
+    lea si, number
+    mov cl, n
+    xor ch, ch
+
+print_merit_loop:
+    mov dl, [si]
+    add dl, '0'
+    mov ah, 2h
+    int 21h
+
+    
+    mov dl, ' '
+    mov ah, 2h
+    int 21h
+
+    inc si
+    loop print_merit_loop
     
     ret
     displayResult endp
